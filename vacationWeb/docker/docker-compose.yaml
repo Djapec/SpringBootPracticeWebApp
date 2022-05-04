@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    ports:
+      - "3306:3306"
+    volumes:
+      - ~/apps/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=pedja
+      - MYSQL_PASSWORD=pedja
+      - MYSQL_USER=pedja
+      - MYSQL_DATABASE=vacation
+  vacations:
+    container_name: vacationsWeb
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    expose:
+      - "8085"
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mysql
